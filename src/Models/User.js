@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 
-const User = mongoose.Schema({
+const User = new mongoose.Schema({
 
     //_id: mongoose.Schema.Types.ObjectId,
 
@@ -33,7 +33,7 @@ const User = mongoose.Schema({
 });
 
 User.pre('save', async function () {
-    passwordHash = bcrypt.hash(this.password, 8);
+    passwordHash = await bcrypt.hash(this.password, 8);
     this.password = passwordHash;
 });
 

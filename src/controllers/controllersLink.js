@@ -1,24 +1,27 @@
 require('../Models/Links');
 const express = require('express');
 const mongoose = require('mongoose');
+const authAcess = require('../controllers/authenticate/middleware');
 
 const links = mongoose.model('Links');
 
-const router = express.Router();
 
+const router = express.Router();
+router.use(authAcess);
 
 router.post('/create', async (req, res) => {
     
     try {
-        const { title, user, content, category } = req.body;
+        const { id } = req.headers;
+        const { title, content, category } = req.body;
 
         const dataLink = await links.create({
             title,
             content,
             category,
-            user,
+            user: id,
         })
-
+            
         return res.status(201).json({ message: 'cadastrado' })
     }
         catch (err) {
@@ -31,8 +34,7 @@ router.post('/create', async (req, res) => {
 //----------------- verificar a forma de envio do id do usuario-----------------//
 
 router.get('/', async (req, res) => {
-
-    const { id } = req.headers;
+    const { id } = req.headers
     try {
         const dataLink = await links.find({user: id});
 
@@ -76,7 +78,7 @@ router.patch('/update/:id', async (req, res) => {
         const { id } = req.params;
         const { title, content, category } = req.body;
 
-        const dataLink = await links.updateOne({ _id: id }, { 
+        await links.updateOne({ _id: id }, { 
             $set: {
                 title: title,
                 content: content,
@@ -98,7 +100,7 @@ router.patch('/update/:id', async (req, res) => {
 
 
 
-router.delete('/:id/delete', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
