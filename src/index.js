@@ -26,7 +26,7 @@ try {
         })
     });
 } catch (err) {
-    console.log('erro no express', err);
+    console.log('erro ', err);
 }
 
 

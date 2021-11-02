@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         if(err) return res.status(406).json({message: 'token incompativel'});
 
 
-        id = decoded.id;
+        id_token = decoded.id;
 
         return next();    
         

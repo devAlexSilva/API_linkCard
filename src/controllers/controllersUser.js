@@ -1,9 +1,11 @@
 const express = require('express');
 require('../Models/User');
+require('../Models/Links');
 const mongoose = require('mongoose');
 
 
 const User = mongoose.model('Users');
+const Links = mongoose.model('Links');
 
 const router = express.Router();
 
@@ -32,7 +34,7 @@ router.get('/:id', async (req, res) => {
         return res.status(302).json(dataUser);
 });
 
-router.patch('/:id/update', async (req, res) => {
+router.patch('/update/:id', async (req, res) => {
     try {
 
         const { id } = req.params;
@@ -49,11 +51,15 @@ router.patch('/:id/update', async (req, res) => {
 
 
 
-router.delete('/:id/delete', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
         await User.deleteOne({ _id: id });
+
+        await Links.deleteMany({
+            user: id,
+        });
 
         return res.status(200).json({ message: 'deletado com suceesso' });
     } catch (err) {

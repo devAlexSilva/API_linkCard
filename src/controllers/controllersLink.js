@@ -1,10 +1,11 @@
 require('../Models/Links');
+require('../Models/User');
 const express = require('express');
 const mongoose = require('mongoose');
 const authAcess = require('../controllers/authenticate/middleware');
 
 const links = mongoose.model('Links');
-
+const Users = mongoose.model('Users');
 
 const router = express.Router();
 router.use(authAcess);
@@ -12,16 +13,16 @@ router.use(authAcess);
 router.post('/create', async (req, res) => {
     
     try {
-        const { id } = req.headers;
         const { title, content, category } = req.body;
 
-        const dataLink = await links.create({
+        await links.create({
             title,
             content,
             category,
-            user: id,
+            user: id_token,
         })
             
+
         return res.status(201).json({ message: 'cadastrado' })
     }
         catch (err) {
@@ -34,9 +35,9 @@ router.post('/create', async (req, res) => {
 //----------------- verificar a forma de envio do id do usuario-----------------//
 
 router.get('/', async (req, res) => {
-    const { id } = req.headers
+    
     try {
-        const dataLink = await links.find({user: id});
+        const dataLink = await links.find({user: id_token});
 
         return res.status(200).json(dataLink);
     } catch (err) {
