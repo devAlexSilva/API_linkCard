@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+
 const User = mongoose.Schema({
+
+    //_id: mongoose.Schema.Types.ObjectId,
+
 
     name: {
         type: String,
@@ -19,11 +23,16 @@ const User = mongoose.Schema({
         type: String,
         require: true,
         select: false,
-    }
+    },
+
+    links: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Links'
+    }]
 
 });
 
-User.pre('save', async function() {
+User.pre('save', async function () {
     passwordHash = bcrypt.hash(this.password, 8);
     this.password = passwordHash;
 });

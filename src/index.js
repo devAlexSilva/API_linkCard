@@ -33,3 +33,4 @@ try {
 require('./controllers/createUser')(app);
 require('./controllers/controllersUser')(app);
 require('./controllers/authenticate/tokenLogin')(app);
+require('./controllers/controllersLink')(app);
