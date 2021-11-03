@@ -11,7 +11,7 @@ app.use(cors());
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.0bzor.mongodb.net/app?retryWrites=true&w=majority`)
 .then(()=>{
-    app.listen(process.env.DB_PORT);
+    app.listen(process.env.PORT || 4000);
     console.log('conecatado ao db');
 })
 .catch(()=>{
