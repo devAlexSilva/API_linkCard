@@ -2,13 +2,14 @@ const express = require('express');
 require('../Models/User');
 require('../Models/Links');
 const mongoose = require('mongoose');
+const authAcess = require('../controllers/authenticate/middleware');
 
 
 const User = mongoose.model('Users');
 const Links = mongoose.model('Links');
 
 const router = express.Router();
-
+router.use(authAcess);
 
 router.get('/', async (req, res) => {
 
@@ -23,24 +24,22 @@ router.get('/', async (req, res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
 
-        const { id } = req.params;
 
-        const dataUser = await User.findOne({ _id: id })
+        const dataUser = await User.findOne({ _id: id_token })
 
         if(!dataUser) return res.status(204).json({ err: 'sem usuarios cadastrados' });
         
         return res.status(302).json(dataUser);
 });
 
-router.patch('/update/:id', async (req, res) => {
+router.patch('/update', async (req, res) => {
     try {
 
-        const { id } = req.params;
         const { name } = req.body;
 
-        const dataUser = await User.findByIdAndUpdate({ _id: id }, { name: name });
+        const dataUser = await User.findByIdAndUpdate({ _id: id_token }, { name: name });
 
         return res.status(202).json(dataUser);
     } catch (err) {
@@ -51,14 +50,13 @@ router.patch('/update/:id', async (req, res) => {
 
 
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete', async (req, res) => {
     try {
-        const { id } = req.params;
-
-        await User.deleteOne({ _id: id });
+        
+        await User.deleteOne({ _id: id_token });
 
         await Links.deleteMany({
-            user: id,
+            user: id_token,
         });
 
         return res.status(200).json({ message: 'deletado com suceesso' });

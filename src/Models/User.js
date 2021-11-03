@@ -25,11 +25,6 @@ const User = new mongoose.Schema({
         select: false,
     },
 
-    links: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Links',
-    }]
-
 });
 
 User.pre('save', async function () {

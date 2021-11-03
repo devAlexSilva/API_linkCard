@@ -1,11 +1,10 @@
 require('../Models/Links');
-require('../Models/User');
 const express = require('express');
 const mongoose = require('mongoose');
 const authAcess = require('../controllers/authenticate/middleware');
 
 const links = mongoose.model('Links');
-const Users = mongoose.model('Users');
+
 
 const router = express.Router();
 router.use(authAcess);
