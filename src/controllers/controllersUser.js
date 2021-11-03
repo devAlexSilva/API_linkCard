@@ -11,17 +11,6 @@ const Links = mongoose.model('Links');
 const router = express.Router();
 router.use(authAcess);
 
-router.get('/', async (req, res) => {
-
-    try {
-        const dataUser = await User.find();
-
-        return res.status(200).json(dataUser);
-    } catch (err) {
-
-        return res.status(204).json({ err: 'sem usuarios cadastrados' })
-    }
-})
 
 
 router.get('/', async (req, res) => {

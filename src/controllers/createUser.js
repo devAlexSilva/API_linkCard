@@ -20,7 +20,7 @@ router.post('/create', async (req, res)=>{
     return res.status(201).json({ message: 'cadastrado' })
     }
     catch(err){
-    console.log(err, req.body)
+
     return res.status(406).json({ err: 'verifique os dados inseridos' })
     }
 });
