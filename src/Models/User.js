@@ -4,11 +4,9 @@ const bcrypt = require('bcryptjs');
 
 const User = new mongoose.Schema({
 
-    //_id: mongoose.Schema.Types.ObjectId,
-
-
     name: {
         type: String,
+        maxlength: 50,
         require: true,
     },
 
@@ -17,13 +15,22 @@ const User = new mongoose.Schema({
         require: true,
         unique: true,
         lowercase: true,
+        trim: true,
+        maxlength: 100
     },
 
     password: {
         type: String,
         require: true,
         select: false,
+        trim: true,
+        maxlength: 100
     },
+
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 
 });
 

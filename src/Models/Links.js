@@ -8,17 +8,23 @@ const LinksDb = new mongoose.Schema({
         ref: 'Users',
         required: true
     },
+
     title: {
-        type: String
+        type: String,
+        maxlength: 100
     },
+
     content: {
-        type: String
+        type: String,
+        
     },
     category: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
+        maxlength: 80
     },
+
     createdAt: {
         type: Date,
         default: Date.now
