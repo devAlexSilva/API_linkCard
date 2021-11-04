@@ -2,11 +2,15 @@ const express = require('express');
 const  mongoose  = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.0bzor.mongodb.net/app?retryWrites=true&w=majority`)
@@ -22,7 +26,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
 try {
     app.get('/', (req, res) => {
         res.status(200).json({
-            ok: "rota inicial na porta 4000"
+            ok: "https://api-card-task/docs.herokuapp.com"
         })
     });
 } catch (err) {

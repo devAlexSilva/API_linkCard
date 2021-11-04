@@ -1,0 +1,116 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "API REST para consumo de Dev FrontEnd",
+        "description": "Para desenvolvedores FrontEnd testarem suas aplicações consumindo uma API com registro de usuários, login com autenticação JWT, criptografia de senha, CRUD de usuários e postagens. ",
+        "contact": {
+            "email": "9apsilva@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [{
+        "url": "http://localhost:4000",
+        "description": "Teste"
+    }],
+    "paths": {
+        "/login": {
+            "post": {
+                "sumary": "logar na aplicação",
+                "description": "rota para realizar o login e gerar o JWT",
+                "tags": ["user"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized",
+                        "message": "credenciais inválidas"
+                    },
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User",
+                                    "bearerAuth": {
+                                        "$ref": "#/components/securitySchemes/BearerAuth"
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "required": true,
+                        "example":"jhon@Doe.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true,
+                        "example": "dd64d98wddggw4"
+                    }
+                }
+            },
+            "CreateUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "password": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "dd554d8dd78d6d"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Alex Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "Jhon@Doe.com"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
