@@ -21,7 +21,7 @@
     "paths": {
         "/login": {
             "post": {
-                "sumary": "logar na aplicação",
+                "summary": "logar na aplicação",
                 "description": "rota para realizar o login e gerar o JWT",
                 "tags": [
                     "user"
@@ -55,6 +55,109 @@
                     }
                 }
             }
+        },
+        "/user/create": {
+            "post": {
+                "summary": "criar usuario",
+                "description": "rota para criar um usuario novo",
+                "tags": [
+                    "user"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "cadastrado"
+                    },
+                    "406": {
+                        "description": "verifique os dados inseridos"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "summary": "mostrar usuario",
+                "description": "rota para exibir os dados do usuario logado (não traz senha)",
+                "tags": [
+                    "user"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_token",
+                        "in": "headers",
+                        "description": "id do usuario logado enviado pelo middleware na autenticação",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "sem usuarios cadastrados"
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "patch": {
+                "summary": "atualizar dados do usuario",
+                "description": "rota para atualizar dados, por enquanto nome.",
+                "tags": [
+                    "user"
+                ],
+                "parameters": [
+                    {
+                        "name": "id_token",
+                        "in": "headers",
+                        "description": "id do usuario logado enviado pelo middleware na autenticação",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nome Novo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "description": "falha ao atualizar"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -79,15 +182,18 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "required": true
+                        "required": true,
+                        "example": "Alex Doe"
                     },
                     "email": {
                         "type": "string",
-                        "required": true
+                        "required": true,
+                        "example": "Alex@Doe.com"
                     },
                     "password": {
                         "type": "string",
-                        "required": true
+                        "required": true,
+                        "example": "dd64d98wddggw4"
                     }
                 }
             },

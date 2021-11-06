@@ -15,7 +15,6 @@ router.use(authAcess);
 
 router.get('/', async (req, res) => {
 
-
         const dataUser = await User.findOne({ _id: id_token })
 
         if(!dataUser) return res.status(204).json({ err: 'sem usuarios cadastrados' });
