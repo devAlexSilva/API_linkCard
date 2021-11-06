@@ -1,4 +1,5 @@
-api para o projeto link card
+api para ajudar desenvolvedores front-end a testar suas aplicações consumindo uma API REST
+https://api-card-task.herokuapp.com/docs/
 ---
 
 **NodeJS**
