@@ -29,6 +29,7 @@ router.patch('/update', async (req, res) => {
 
         const dataUser = await User.findByIdAndUpdate({ _id: id_token }, { name: name });
 
+        
         return res.status(202).json(dataUser);
     } catch (err) {
 
@@ -46,7 +47,7 @@ router.delete('/delete', async (req, res) => {
         await Links.deleteMany({
             user: id_token,
         });
-
+        console.log(id_token)
         return res.status(200).json({ message: 'deletado com suceesso' });
     } catch (err) {
 

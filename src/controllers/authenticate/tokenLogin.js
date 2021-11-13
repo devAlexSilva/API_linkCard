@@ -13,7 +13,7 @@ module.exports = (app) => {
 
 
         
-        const dataUser = await User.findOne({ email: email }).select('password');
+        const dataUser = await User.findOne({ email: email }).select('+password');
         
         if(!dataUser) return res.status(401).json({ err: 'credenciais invalidas' });
             
