@@ -26,7 +26,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
 try {
     app.get('/', (req, res) => {
         res.status(200).json({
-            docsIn: "https://api-card-task/docs.herokuapp.com"
+            Documentation: "https://api-card-task.herokuapp.com/docs"
         })
     });
 } catch (err) {
