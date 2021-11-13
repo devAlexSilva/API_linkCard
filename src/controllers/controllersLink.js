@@ -10,7 +10,6 @@ const router = express.Router();
 router.use(authAcess);
 
 router.post('/create', async (req, res) => {
-    
     try {
         const { title, content, category } = req.body;
 
@@ -36,6 +35,19 @@ router.get('/', async (req, res) => {
     
     try {
         const dataLink = await links.find({user: id_token});
+
+        return res.status(200).json(dataLink);
+    } catch (err) {
+
+        return res.status(204).json({ err: 'sem links salvo' })
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    
+    const { id } = req.params
+    try {
+        const dataLink = await links.find({_id: id});
 
         return res.status(200).json(dataLink);
     } catch (err) {
@@ -100,6 +112,7 @@ router.patch('/update/:id', async (req, res) => {
 
 
 router.delete('/delete/:id', async (req, res) => {
+
     try {
         const { id } = req.params;
 
